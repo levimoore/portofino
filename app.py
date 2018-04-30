@@ -8,7 +8,7 @@ app = Flask(__name__)
 r = redis.Redis(host='redis', port=6379)
 
 def addToRedis(endpoint, value):
-    r.append(endpoint, value)
+    r.rpush(endpoint, value)
 
 @app.route('/')
 def index():
@@ -47,7 +47,7 @@ def logs():
 
 @app.route('/v1/<endpoint>/logs')
 def endpointlogs(endpoint):
-    value = r.get(endpoint)
+    value = r.lrange(endpoint, 0, -1)
     response = jsonify(logs=value)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
