@@ -41,12 +41,16 @@ def logs():
         value = r.get(key)
         logs = {'logs': value}
         data.append(logs)
-    return jsonify(logset=data)
+    response = jsonify(logset=data)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/v1/<endpoint>/logs')
 def endpointlogs(endpoint):
     value = r.get(endpoint)
-    return jsonify(logs=value)
+    response = jsonify(logs=value)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
