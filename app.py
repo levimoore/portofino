@@ -7,10 +7,13 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 r = redis.Redis(host='redis', port=6379)
 
+def addToRedis(endpoint, value):
+    r.append(endpoint, value)
+
 @app.route('/v1/hello-world')
 def helloworld():
     visit = {'ip': request.remote_addr, 'timestamp': int(time.time())}
-    r.append('hello-world', visit)
+    addToRedis('hello-world', visit)
     return jsonify(
         message='hello world')
 
@@ -19,7 +22,7 @@ Test adding new endpoint
 @app.route('/v1/foo-bar')
 def foobar():
     visit = {'ip': request.remote_addr, 'timestamp': int(time.time())}
-    r.append('foo-bar', visit)
+    addToRedis('foo-bar', visit)
     return jsonify(
         message='foo bar')
 '''
