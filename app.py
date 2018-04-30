@@ -14,6 +14,16 @@ def helloworld():
     return jsonify(
         message='hello world')
 
+'''
+Test adding new endpoint
+@app.route('/v1/foo-bar')
+def foobar():
+    visit = {'ip': request.remote_addr, 'timestamp': int(time.time())}
+    r.append('foo-bar', visit)
+    return jsonify(
+        message='foo bar')
+'''
+
 @app.route('/v1/logs')
 def logs():
     keys = r.keys()
