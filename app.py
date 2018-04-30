@@ -1,7 +1,7 @@
 import time
 
 import redis
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 
 app = Flask(__name__)
@@ -9,6 +9,10 @@ r = redis.Redis(host='redis', port=6379)
 
 def addToRedis(endpoint, value):
     r.append(endpoint, value)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/v1/hello-world')
 def helloworld():

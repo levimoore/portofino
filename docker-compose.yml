@@ -1,6 +1,12 @@
 version: '2'
 services:
   web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+  api:
     build: .
     volumes:
       - .:/app
