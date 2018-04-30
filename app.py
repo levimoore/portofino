@@ -38,7 +38,7 @@ def logs():
     for key in keys:
         endpoint = {'endpoint': key}
         data.append(endpoint)
-        value = r.get(key)
+        value = r.lrange(key, 0, -1)
         logs = {'logs': value}
         data.append(logs)
     response = jsonify(logset=data)
