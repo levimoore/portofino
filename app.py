@@ -6,6 +6,7 @@
 import time
 
 import redis
+import json
 from flask import Flask, jsonify, request, render_template
 
 # App instantiation
@@ -24,16 +25,17 @@ def index():
 @app.route('/v1/hello-world')
 def helloworld():
     visit = {'ip': request.remote_addr, 'timestamp': int(time.time())}
-    addToRedis('hello-world', visit)
-    return jsonify(
-        message='hello world')
+    value = json.dumps(visit)
+    addToRedis('hello-world', value)
+    return jsonify(message='hello world')
 
 '''
 Test adding new endpoint
 @app.route('/v1/foo-bar')
 def foobar():
     visit = {'ip': request.remote_addr, 'timestamp': int(time.time())}
-    addToRedis('foo-bar', visit)
+    value = json.dumps(visit)
+    addToRedis('foo-bar', value)
     return jsonify(
         message='foo bar')
 '''
