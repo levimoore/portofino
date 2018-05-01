@@ -1,15 +1,22 @@
+# An example api for Docker and Redis
+# built with the Flask framework
+# http://flask.pocoo.org/
+
+# imports
 import time
 
 import redis
 from flask import Flask, jsonify, request, render_template
 
-
+# App instantiation
 app = Flask(__name__)
 r = redis.Redis(host='redis', port=6379)
 
+# Send data to Redis
 def addToRedis(endpoint, value):
     r.rpush(endpoint, value)
 
+# API routes
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -52,5 +59,6 @@ def endpointlogs(endpoint):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# Run app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
