@@ -15,6 +15,7 @@ r = redis.Redis(host='redis', port=6379)
 
 # Send data to Redis
 def addToRedis(endpoint, value):
+    print(value)
     r.rpush(endpoint, value)
 
 # API routes
